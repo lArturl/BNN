@@ -3,13 +3,59 @@
 
 ## Questions
 
+How can we ensure that we get best weights for each parameter, avoiding smoothing out things that are important (Not leaning towards minimum requirement for combining models, like mean weighting)
+
 - How to reduce computational cost, while leaving maximal accuracy in predictions
-    Example with GraphCast
+    + Example with GraphCast and effectivness of prunning
 - How effective is prunning for the complexity reduction  
 - How effective are dimensionality reduction techniques 
     (PCA, wavelet decomposition, singular value decomposition.)
 - How much do attention layers contribute to accuracy 
 
+
+## Research ideas
+
+1. To compare effectivness both in time and accuracy of using randomized maximum a posteriori (MAP) sampling vs pruning model and using MCMC/HMC. Potentially using BNN architecture from [16] and  applying BPrune Libary from [23]
+        Since Markov Chain Monte Carlo (MCMC) or Hamiltonian Monte Carlo (HMC) are considered "gold-standard inference techniques" but are at the same time computationally to expensive for big datasets. [16] proposed to use MAP instead. 
+        Poteantially would be interesting to see differences between both aproches on time and accuracy.
+      
+2. To compare different prunning techniques, both compautional time and accuracy based BNN model architecture from [16], rewrite it into Pytorch and apply prune library from [22], which provides different established prunning techniques
+        As argued in [22] prunning studies on new algorithms should be considered viable, when effects of their algorithms are studied on the same data and NN architecture with the best case using the same varibales, since all of the above can affect results of prunning.
+        So continuing the logic its not established what are the best prunning methods for physical model ensabling with BNN.
+
+3. To compare BNN architectre with attention layer possibly scheme from [24]  vs BNN wo attention layer (as in [16]) vs weightning aproach from [19] . 
+        As proposed in [24] and shown in Fig.1 show "the significant superiority of the Bayesian neural network method with channel attention mechanism in equipment trend prediction, outperforming traditional time series models and other commonly used methods."
+        sadly without a code to reproduce 
+        Since a lot of papers like [25] Fig.2, [20] Fig.3, [16] Fig. 4
+        Additionally possible to replace model form [24] with adoption of model from very influational papaer [26] Fig. 5 and Fig 6. 
+   
+
+
+   <img width="853" alt="Screenshot 2024-03-18 122904" src="https://github.com/lArturl/BNN/assets/46194986/2071c4ea-3ec6-441e-9bfd-85fa3054cc06">
+   
+   Figure. 1: Proposed architecture of incorporating attenton layer into BNN.
+
+   <img width="853" alt="Screenshot 2024-03-18 122905" src="https://github.com/lArturl/BNN/assets/46194986/96fc6869-3329-4cc7-936b-d4ff0dcca054">
+    
+   Figure. 2: Example of Embedding layer for coodinates.
+        
+   <img width="853" alt="Screenshot 2024-03-18 122906" src="https://github.com/lArturl/BNN/assets/46194986/e4e5fbb3-9ce9-401e-b8d8-59309eb5699f">
+    
+   Figure. 3: Example of "Spacial" BNN using embading layer.
+
+   <img width="853" alt="Screenshot 2024-03-18 122907" src="https://github.com/lArturl/BNN/assets/46194986/ad43b03e-de1f-4c3c-982a-846cdcab1309">
+
+   Figure. 4: Example of Space-Time BNN using embading layer.
+
+   ![Screenshot 2024-03-18 125851](https://github.com/lArturl/BNN/assets/46194986/80dd97cc-c423-4d58-b722-c83bb13492c9)
+
+   Figure. 5: Overall architecture proposed in [26], which consists of the main LSTM network, the spatial attention subnetwork, and the temporal attention subnetwork
+
+   ![Screenshot 2024-03-18 130206](https://github.com/lArturl/BNN/assets/46194986/a70898a6-e418-46df-b869-08129bd16594)
+   
+   Figure. 5: Illustration of how spatial attention output α andtemporal attention output β influence the LSTM network.
+
+   
 
 
 ## Meeting log
@@ -71,3 +117,8 @@ Vamborg, Sebastien Villaume, Jean-Noël Thépaut. (2020). The ERA5 global reanal
 19. Merrifield, A. L., Brunner, L., Lorenz, R., Medhaug, I., & Knutti, R. (2020). An investigation of weighting schemes suitable for incorporating large ensembles into multi-model ensembles. Earth System Dynamics, 11(3), 807–834. https://doi.org/10.5194/esd-11-807-2020 
 20. Zammit-Mangion, A., Kaminski, M. D., Tran, B.-H., Filippone, M., & Cressie, N. (2023). Spatial Bayesian Neural Networks. arXiv preprint arXiv:2311.09491. Retrieved from https://doi-org.uaccess.univie.ac.at/10.48550/arXiv.2311.09491 
 21. Sharma, H., Jennings, E. Bayesian neural networks at scale: a performance analysis and pruning study. J Supercomput 77, 3811–3839 (2021). https://doi.org/10.1007/s11227-020-03401-z
+22. Blalock, D., Gonzalez Ortiz, J. J., Frankle, J., & Guttag, J. (2020). What is the State of Neural Network Pruning? In Proceedings of Machine Learning and Systems 2020 (MLSys 2020). https://doi.org/10.48550/arXiv.2003.03033
+23. Sharma, H., Jennings, E. Bayesian neural networks at scale: a performance analysis and pruning study. J Supercomput 77, 3811–3839 (2021). https://doi.org/10.1007/s11227-020-03401-z
+24. C. Ming-Yu, T. Le and M. Guo, "Bayesian Neural Network-Based Equipment Operational Trend Prediction Method Using Channel Attention Mechanism," in IEEE Access, vol. 12, pp. 33792-33802, 2024, doi: 10.1109/ACCESS.2024.3367829
+25. Chen, W., Li, Y., Reich, B. J., & Sun, Y. (2020). DeepKriging: Spatially Dependent Deep Neural Networks for Spatial Prediction. arXiv:2007.11972. https://doi.org/10.48550/arXiv.2007.11972
+26. Song, S., Lan, C., Xing, J., Zeng, W., & Liu, J. (2016). An End-to-End Spatio-Temporal Attention Model for Human Action Recognition from Skeleton Data. arXiv preprint arXiv:1611.06067. https://doi.org/10.48550/arXiv.1611.06067
